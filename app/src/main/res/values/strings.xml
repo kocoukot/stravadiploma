@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">stravadiploma</string>
+
+    <string name="onboarding_first_title"> Welcome to Ascent </string>
+    <string name="onboarding_first_text"> Here you can monitor your weight and activities </string>
+
+    <string name="onboarding_second_title"> Friends </string>
+    <string name="onboarding_second_text"> Fill in the activity and weight fields, and then share the information with your friends </string>
+
+    <string name="onboarding_third_title"> Activities </string>
+    <string name="onboarding_third_text"> Convenient weight and activity tracking system-fill out your profile and start living brightly </string>
+    <string name="on_boarding_skip">skip</string>
+
+    <string name="okay">Okay</string>
+
+    <string name="auth_login">Continue with Strava</string>
+    <string name="auth_canceled">Аутентификация не выполнена</string>
+    <string name="profile">Profile</string>
+    <string name="activities">Activities</string>
+    <string name="share">Share</string>
+    <string name="following">Following</string>
+    <string name="followers">Followers</string>
+    <string name="logout">Logout</string>
+    <string name="gender">Gender</string>
+    <string name="country">Country</string>
+    <string name="weight_edit">Weight(edit)</string>
+    <string name="name">Name</string>
+    <string name="description">Description</string>
+    <string name="distance">Distance</string>
+    <string name="time">Time</string>
+    <string name="date">Date</string>
+    <string name="type">Type</string>
+    <string name="add">Add</string>
+    <string name="logoutMessage">Вы уверены, что хотите выйти? Все данные будут удалены</string>
+    <string name="decline">Decline</string>
+    <string name="accept">Accept</string>
+
+
+
+</resources>
