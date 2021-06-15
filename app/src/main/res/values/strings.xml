@@ -34,7 +34,13 @@
     <string name="logoutMessage">Вы уверены, что хотите выйти? Все данные будут удалены</string>
     <string name="decline">Decline</string>
     <string name="accept">Accept</string>
+    <string name="shareString"> Hi! I\'m using Strava. https://www.strava.com/athletes/ </string>
 
 
+    <!--    AlpineSki, BackcountrySki, Canoeing, Crossfit, EBikeRide, Elliptical, Golf, Handcycle, Hike,-->
+<!--    IceSkate, InlineSkate, Kayaking, Kitesurf, NordicSki, Ride, RockClimbing, RollerSki, Rowing,-->
+<!--    Run, Sail, Skateboard, Snowboard, Snowshoe, Soccer, StairStepper, StandUpPaddling, Surfing,-->
+<!--    Swim, Velomobile, VirtualRide, VirtualRun, Walk, WeightTraining, Wheelchair, Windsurf, Workout,-->
+<!--    Yoga-->
 
 </resources>

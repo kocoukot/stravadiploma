@@ -1,8 +1,7 @@
 package com.example.stravadiploma.database.dao
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Query
+import androidx.room.*
+import com.example.stravadiploma.data.UserForActivity
 import com.example.stravadiploma.data.UserProfile
 import com.example.stravadiploma.database.contracts.UserContract
 
@@ -10,8 +9,14 @@ import com.example.stravadiploma.database.contracts.UserContract
 interface UserDao {
 
     @Query("SELECT * FROM ${UserContract.TABLE_NAME}")
-    suspend fun getAllStudents(): UserProfile
+    suspend fun getUser(): UserProfile
 
-    @Delete()
-    suspend fun deleteUser(user: UserProfile)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addUser(userProfile: UserProfile): Long
+
+    @Delete
+    suspend fun deleteUser(userProfile: UserProfile)
+
+    @Query("SELECT ${UserContract.Columns.USER_FIRST_NAME}, ${UserContract.Columns.USER_LAST_NAME}, ${UserContract.Columns.USER_AVATAR} FROM ${UserContract.TABLE_NAME}")
+    suspend fun getUserName(): UserForActivity
 }

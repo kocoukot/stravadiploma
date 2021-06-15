@@ -25,6 +25,9 @@ object Network {
         .client(okhttpClient)
         .build()
 
-    val githubApi: UserProfileApi
+    val userApi: UserProfileApi
+        get() = retrofit.create()
+
+    val activityApi: ActivityListApi
         get() = retrofit.create()
 }

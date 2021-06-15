@@ -23,12 +23,18 @@ fun Fragment.toast(@StringRes stringRes: Int) {
     Toast.makeText(requireContext(), stringRes, Toast.LENGTH_SHORT).show()
 }
 
-fun LogInfo(text: String = "gotHere"){
-    Log.d("DiplomaProject", text)
+fun logInfo(text: Any? = "gotHere"){
+    Log.d("DiplomaProject", text.toString())
 }
 
 fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false): View {
     return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
+}
+
+fun Long.timeFormat(): String {
+    val hour = if ((this / 3600) == 0.toLong()) "" else "${(this / 3600)} h "
+    return "$hour${(this % 3660 )/ 60} min"
+
 }
 
 

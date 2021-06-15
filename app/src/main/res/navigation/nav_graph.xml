@@ -1,5 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/nav_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/profileFragment">
 
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.stravadiploma.profile.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile">
+        <action
+
+            android:id="@+id/action_profileFragment_to_contactsFragment"
+            app:destination="@id/contactsFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_userActivityFragment2"
+            app:destination="@id/userActivityFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/contactsFragment"
+        android:name="com.example.stravadiploma.contacts.ContactsFragment"
+        android:label="ContactsFragment"
+        tools:layout="@layout/fragment_contacts_list" >
+        <argument
+            android:name="userId"
+            app:argType="long" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/userActivityFragment"
+        android:name="com.example.stravadiploma.useractivitylist.UserActivityFragment"
+        android:label="UserActivityFragment"
+        tools:layout="@layout/fragment_activities_list">
+        <action
+            android:id="@+id/action_userActivityFragment_to_newActivityFragment"
+            app:destination="@id/newActivityFragment" />
+        <action
+            android:id="@+id/action_userActivityFragment_to_profileFragment2"
+            app:destination="@id/profileFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/newActivityFragment"
+        android:name="com.example.stravadiploma.newactivity.NewActivityFragment"
+        android:label="NewActivityFragment"
+        tools:layout="@layout/fragment_new_activity"/>
 </navigation>

@@ -1,20 +1,21 @@
 package com.example.stravadiploma.profile
 
-import android.util.Log
 import com.example.stravadiploma.data.UserProfile
+import com.example.stravadiploma.database.Database
 import com.example.stravadiploma.net.Network
-import com.example.stravadiploma.utils.LogInfo
+import com.example.stravadiploma.utils.logInfo
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Error
-import java.util.*
 
 class ProfileRepository {
 
-    suspend fun getUserProfile(): UserProfile {
-        return Network.githubApi.searchUsers()
+    private val userDao = Database.instance.userDao()
 
+    suspend fun getUserProfile(): UserProfile {
+        val user = Network.userApi.searchUsers()
+        userDao.addUser(user)
+        return user
     }
 
     fun setUserNewWeight(
@@ -22,19 +23,19 @@ class ProfileRepository {
         callback: (Boolean) -> Unit,
         errorCallBack: (e: Throwable) -> Unit
     ) {
-        Network.githubApi.setUserNewWeight(weight).enqueue(object : Callback<UserProfile> {
+        Network.userApi.setUserNewWeight(weight).enqueue(object : Callback<UserProfile> {
             override fun onFailure(call: Call<UserProfile>, t: Throwable) {
-                LogInfo("Error response on check if stared or not stared")
+                logInfo("Error response on check if stared or not stared")
                 errorCallBack(t)
             }
 
             override fun onResponse(call: Call<UserProfile>, response: Response<UserProfile>) {
                 if (response.isSuccessful) {
-                    LogInfo("Successfully uploaded")
+                    logInfo("Successfully uploaded")
                     callback(true)
                 } else {
                     errorCallBack(Throwable("asd"))
-                    LogInfo("Error response on check if stared or not stared")
+                    logInfo("Error response on check if stared or not stared")
                 }
             }
         })
@@ -44,14 +45,14 @@ class ProfileRepository {
         callback: (Boolean) -> Unit,
         errorCallBack: (e: Throwable) -> Unit
     ) {
-        Network.githubApi.logoutProfile().enqueue(object : Callback<Any> {
+        Network.userApi.logoutProfile().enqueue(object : Callback<Any> {
             override fun onResponse(call: Call<Any>, response: Response<Any>) {
                 if (response.isSuccessful) {
-                    LogInfo("Successfully uploaded")
+                    logInfo("Successfully uploaded")
                     callback(true)
                 } else {
                     errorCallBack(Throwable("asd"))
-                    LogInfo("Error response on check if stared or not stared")
+                    logInfo("Error response on check if stared or not stared")
                 }
             }
 

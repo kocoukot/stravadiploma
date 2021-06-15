@@ -1,8 +1,11 @@
 package com.example.stravadiploma.auth
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -22,8 +25,8 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
     private val viewModel: AuthViewModel by viewModels()
     private val binding by viewBinding(FragmentAuthBinding::bind)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         bindViewModel()
     }
 

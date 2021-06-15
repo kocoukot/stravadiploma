@@ -1,19 +1,20 @@
 package com.example.stravadiploma.contacts
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.stravadiploma.adapters.contacts.ContactAdapter
 import com.example.stravadiploma.R
 import com.example.stravadiploma.UserActivity
+import com.example.stravadiploma.adapters.contacts.ContactAdapter
 import com.example.stravadiploma.databinding.FragmentContactsListBinding
-import com.example.stravadiploma.utils.LogInfo
 
-class ContactsFragment:Fragment(R.layout.fragment_contacts_list) {
+class ContactsFragment : Fragment(R.layout.fragment_contacts_list) {
 
     private var _binding: FragmentContactsListBinding? = null
     private val binding get() = _binding!!
@@ -21,6 +22,8 @@ class ContactsFragment:Fragment(R.layout.fragment_contacts_list) {
     private var contactAdapter: ContactAdapter? = null
 
     private val viewModel: ContactsViewModel by viewModels()
+
+    private val args: ContactsFragmentArgs by navArgs()
 
 
     override fun onCreateView(
@@ -44,22 +47,24 @@ class ContactsFragment:Fragment(R.layout.fragment_contacts_list) {
 
     private fun initList() {
         contactAdapter = ContactAdapter { id ->
-            LogInfo()
-            val contactId = viewModel.contactList.value?.get(id)?.id ?: 0
-
+            viewModel.shareUserProfile(id, args.userId)
         }
         with(binding.contactListRecycler) {
             adapter = contactAdapter
             layoutManager = LinearLayoutManager(requireContext())
         }
+
     }
 
     private fun bindViewModels() {
         viewModel.contactList.observe(viewLifecycleOwner) {
             contactAdapter?.items = it
         }
+        viewModel.shareIntent.observe(viewLifecycleOwner, ::shareUserProfile)
         viewModel.getContacts()
     }
 
-
+    private fun shareUserProfile(intent:Intent){
+        startActivity(intent)
+    }
 }

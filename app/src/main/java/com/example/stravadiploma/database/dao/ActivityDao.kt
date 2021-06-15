@@ -1,7 +1,10 @@
 package com.example.stravadiploma.database.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.stravadiploma.data.ActivityData
 import com.example.stravadiploma.data.UserProfile
 import com.example.stravadiploma.database.contracts.ActivityContract
 import com.example.stravadiploma.database.contracts.UserContract
@@ -11,5 +14,8 @@ import com.example.stravadiploma.database.contracts.UserContract
 interface ActivityDao {
 
     @Query("SELECT * FROM ${ActivityContract.TABLE_NAME}")
-    suspend fun getAllStudents() //: UserProfile
+    suspend fun getAllActivities() : List<ActivityData>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addActivity(activities: List<ActivityData>)
 }

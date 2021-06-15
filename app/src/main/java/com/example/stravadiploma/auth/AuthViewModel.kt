@@ -45,7 +45,6 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
             authService = authService,
             tokenRequest = tokenRequest,
             onComplete = {
-                loadingMutableLiveData.postValue(false)
                 authSuccessLiveEvent.postValue(Unit)
             },
             onError = {

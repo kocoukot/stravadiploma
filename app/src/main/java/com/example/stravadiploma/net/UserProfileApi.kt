@@ -17,4 +17,7 @@ interface UserProfileApi {
 
     @POST("oauth/deauthorize")
     fun logoutProfile(): Call<Any>
+
+    @GET("oauth/deauthorize")
+    fun lget(): Call<Any>
 }

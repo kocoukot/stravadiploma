@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.stravadiploma.data.UserProfile
-import com.example.stravadiploma.utils.LogInfo
+import com.example.stravadiploma.utils.logInfo
 import com.example.stravadiploma.utils.SingleLiveEvent
 import kotlinx.coroutines.launch
 
@@ -14,46 +14,36 @@ class ProfileViewModel : ViewModel() {
 
     private val profileRepository = ProfileRepository()
 
-    private val userProfileLiveData = MutableLiveData<UserProfile>()
+    private val _userProfile = MutableLiveData<UserProfile>()
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    private val _isError = MutableLiveData<Boolean>()
 
-    private val isLoadingLiveData = MutableLiveData<Boolean>()
-    private val isErrorLiveData = MutableLiveData<Boolean>()
-
-    private val isProfileLoadedLiveData = SingleLiveEvent<Boolean>()
     private val isProfileLogoutLiveData = SingleLiveEvent<Unit>()
 
     val userProfile: LiveData<UserProfile>
-        get() = userProfileLiveData
-
+        get() = _userProfile
 
     val isLoading: LiveData<Boolean>
-        get() = isLoadingLiveData
-
-    val isError: LiveData<Boolean>
-        get() = isErrorLiveData
-
-    val isProfileLoaded: LiveData<Boolean>
-        get() = isProfileLoadedLiveData
+        get() = _isLoading
 
     val isProfileLogout: LiveData<Unit>
         get() = isProfileLogoutLiveData
 
 
     fun getUserProfile() {
+        logInfo("making request")
         viewModelScope.launch {
             try {
-                isProfileLoadedLiveData.postValue(false)
-                isLoadingLiveData.postValue(true)
-                isErrorLiveData.postValue(false)
+                _isLoading.postValue(true)
+                _isError.postValue(false)
                 val user = profileRepository.getUserProfile()
-                userProfileLiveData.postValue(user)
-                isLoadingLiveData.postValue(false)
-                isProfileLoadedLiveData.postValue(true)
+                _userProfile.postValue(user)
+                _isLoading.postValue(false)
             } catch (t: Throwable) {
-                Log.d("DiplomaProject", t.localizedMessage!!)
-                isLoadingLiveData.postValue(false)
-                isErrorLiveData.postValue(true)
+                logInfo(t.localizedMessage)
+                _isLoading.postValue(false)
+                _isError.postValue(true)
             }
         }
     }
@@ -61,15 +51,16 @@ class ProfileViewModel : ViewModel() {
     fun setUserNewWeight(weight: Double) {
         viewModelScope.launch {
             try {
+                _isLoading.postValue(true)
                 profileRepository.setUserNewWeight(weight, {
-                    isLoadingLiveData.postValue(false)
+                    _isLoading.postValue(false)
                 }, {
-                    isLoadingLiveData.postValue(false)
-                    isErrorLiveData.postValue(true)
+                    _isLoading.postValue(false)
+                    _isError.postValue(true)
                 })
             } catch (t: Throwable) {
-                isErrorLiveData.postValue(true)
-                LogInfo(t.localizedMessage!!)
+                _isError.postValue(true)
+                logInfo(t.localizedMessage)
             }
         }
     }
@@ -78,15 +69,15 @@ class ProfileViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 profileRepository.logoutProfile({
-                    LogInfo("logged out")
+                    logInfo("Logged out")
                     isProfileLogoutLiveData.postValue(Unit)
                 },{
-                    LogInfo("error logged out")
+                    logInfo("Error logged out")
                 })
 
             } catch (t: Throwable) {
              //   isErrorLiveData.postValue(true)
-                LogInfo(t.localizedMessage!!)
+                logInfo(t.localizedMessage!!)
             }
         }
     }

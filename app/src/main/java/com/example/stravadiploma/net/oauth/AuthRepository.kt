@@ -1,10 +1,8 @@
 package com.example.stravadiploma.net
 
-import android.content.Context
 import android.net.Uri
 import android.util.Log
-import com.example.androidhomework.gitHub.net.AuthConfig
-import com.example.stravadiploma.utils.Constants
+import com.example.stravadiploma.net.oauth.AuthConfig
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.AuthorizationServiceConfiguration

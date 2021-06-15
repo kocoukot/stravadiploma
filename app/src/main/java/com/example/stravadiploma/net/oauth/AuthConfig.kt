@@ -1,4 +1,4 @@
-package com.example.androidhomework.gitHub.net
+package com.example.stravadiploma.net.oauth
 
 import net.openid.appauth.ResponseTypeValues
 

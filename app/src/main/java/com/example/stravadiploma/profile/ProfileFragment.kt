@@ -9,18 +9,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.stravadiploma.MainActivity
 import com.example.stravadiploma.R
 import com.example.stravadiploma.UserActivity
-import com.example.stravadiploma.contacts.ContactsFragment
 import com.example.stravadiploma.data.UserProfile
 import com.example.stravadiploma.databinding.FragmentProfileBinding
-import com.example.stravadiploma.newactivity.NewActivityFragment
-import com.example.stravadiploma.useractivitylist.UserActivityFragment
-import com.example.stravadiploma.utils.LogInfo
+import com.example.stravadiploma.utils.logInfo
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import permissions.dispatcher.PermissionRequest
 import permissions.dispatcher.ktx.constructPermissionsRequest
@@ -35,13 +34,18 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private var adapter: ArrayAdapter<String>? = null
     private var weightList = listOf<Int>()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.getUserProfile()
+        weightList = viewModel.getWeightList()
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         (requireActivity() as UserActivity).setTitle("Profile")
         bindViewModel()
         bindButtons()
         setWeightList("")
-
     }
 
     override fun onCreateView(
@@ -55,10 +59,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     }
 
     private fun bindViewModel() {
-        weightList = viewModel.getWeightList()
+
         viewModel.userProfile.observe(viewLifecycleOwner) { setUserInfo(it) }
+        viewModel.isLoading.observe(viewLifecycleOwner, ::infoLoading)
         viewModel.isProfileLogout.observe(viewLifecycleOwner) {logoutProfile()}
-        viewModel.getUserProfile()
+
     }
 
     private fun bindButtons() {
@@ -76,7 +81,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                     requiresPermission = ::openContactsList
                 ).launch()
             }
-
         }
 
         binding.weightTextView.setOnItemClickListener { _, _, position, _ ->
@@ -133,6 +137,13 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         binding.weightTextView.setAdapter(adapter)
     }
 
+    private fun infoLoading(isLoading: Boolean){
+        binding.loadingProfileProgressBar.isVisible = isLoading
+        binding.logoutButton.isEnabled = !isLoading
+        binding.shareProfileButton.isEnabled = !isLoading
+        binding.weightTextView.isEnabled = !isLoading
+    }
+
     private fun onContactPermissionDenied() {
         Toast.makeText(requireContext(), "Denied", Toast.LENGTH_SHORT).show()
     }
@@ -147,10 +158,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     }
 
     private fun openContactsList(){
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.frameForUser, ContactsFragment())
-            .addToBackStack(USER_PROFILE_FRAGMENT_KEY)
-            .commit()
+        val action = viewModel.userProfile.value?.let {
+            ProfileFragmentDirections.actionProfileFragmentToContactsFragment(
+                it.id)
+        }
+        findNavController().navigate(action!!)
     }
 
     override fun onResume() {

@@ -4,7 +4,6 @@ import android.content.Context
 import android.database.Cursor
 import android.provider.ContactsContract
 import com.example.stravadiploma.data.Contact
-import com.example.stravadiploma.utils.LogInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

@@ -4,6 +4,5 @@
     android:ellipsize="end"
     android:maxLines="1"
     android:padding="16dp"
-    android:text="asdasd"
     android:textAppearance="?attr/textAppearanceSubtitle1">
 </TextView>

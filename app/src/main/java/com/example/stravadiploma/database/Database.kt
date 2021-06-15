@@ -13,8 +13,7 @@ object Database {
             context,
             StravaDataBase::class.java,
             StravaDataBase.DB_NAME
-        )
-            .build()
+        ).build()
     }
 
 }

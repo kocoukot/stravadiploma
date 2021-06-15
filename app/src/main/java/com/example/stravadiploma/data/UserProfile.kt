@@ -25,10 +25,10 @@ data class UserProfile(
     @ColumnInfo(name = UserContract.Columns.USER_NICK_NAME)
     val username: String,
 
-    @ColumnInfo(name = UserContract.Columns.USER_FIRST_NAME)
+    @ColumnInfo(name = UserContract.Columns.USER_LAST_NAME)
     val lastname: String,
 
-    @ColumnInfo(name = UserContract.Columns.USER_LAST_NAME)
+    @ColumnInfo(name = UserContract.Columns.USER_FIRST_NAME)
     val firstname: String,
 
     @ColumnInfo(name = UserContract.Columns.USER_COUNTRY)
