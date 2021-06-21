@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.stravadiploma"
-        minSdkVersion 21
+        minSdkVersion 26
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -124,6 +124,9 @@ dependencies {
     kapt "com.github.permissions-dispatcher:permissionsdispatcher-processor:${latestversionPermission}"
     implementation "com.github.permissions-dispatcher:ktx:1.0.4"
 
+    //SwipeLayput
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
-
+    // WorkManager
+    implementation 'androidx.work:work-runtime-ktx:2.5.0'
 }

@@ -1,11 +1,8 @@
 package com.example.stravadiploma.net
 
 import com.example.stravadiploma.data.ActivityData
-import com.example.stravadiploma.data.UserProfile
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.POST
-import retrofit2.http.PUT
 import retrofit2.http.Query
 
 interface ActivityListApi {
@@ -14,9 +11,14 @@ interface ActivityListApi {
     suspend fun getAllActivities(): List<ActivityData>
 
     @POST("api/v3/activities")
-    fun setUserNewWeight(
-        @Query("weight") weight: Double
-    ): Call<UserProfile>
-
-
+    suspend fun createNewActivity(
+        @Query("name") name: String,
+        @Query("type") type: String,
+        @Query("start_date_local") startDate: String,
+        @Query("elapsed_time") elapsedTime: Int,
+        @Query("description") description: String,
+        @Query("distance") distance: Float,
+        @Query("trainer") trainer: Int,
+        @Query("commute") commute: Int,
+    )
 }

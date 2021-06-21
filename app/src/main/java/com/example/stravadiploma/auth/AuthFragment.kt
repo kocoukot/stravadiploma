@@ -1,11 +1,9 @@
 package com.example.stravadiploma.auth
 
-import android.app.Activity
-import android.content.Context
+
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -14,8 +12,6 @@ import com.example.stravadiploma.MainActivity
 import com.example.stravadiploma.R
 import com.example.stravadiploma.UserActivity
 import com.example.stravadiploma.databinding.FragmentAuthBinding
-import com.example.stravadiploma.profile.ProfileFragment
-import com.example.stravadiploma.utils.Constants
 import com.example.stravadiploma.utils.toast
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationResponse
@@ -51,10 +47,8 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
         viewModel.openAuthPageLiveData.observe(viewLifecycleOwner, ::openAuthPage)
         viewModel.toastLiveData.observe(viewLifecycleOwner, ::toast)
         viewModel.authSuccessLiveData.observe(viewLifecycleOwner) {
-
             val activityClass = UserActivity::class.java
             val intent = Intent(requireContext(), activityClass)
-
             startActivity(intent)
             (requireContext() as MainActivity).finish()
         }
@@ -63,6 +57,7 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
     private fun updateIsLoading(isLoading: Boolean) {
         binding.loginButton.isVisible = !isLoading
         binding.loginProgress.isVisible = isLoading
+        binding.headerLogging.isVisible = !isLoading
     }
 
     private fun openAuthPage(intent: Intent) {

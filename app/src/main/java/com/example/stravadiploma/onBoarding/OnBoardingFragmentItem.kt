@@ -1,4 +1,4 @@
-package com.example.stravadiploma.ui
+package com.example.stravadiploma.onBoarding
 
 import android.os.Bundle
 import android.view.LayoutInflater

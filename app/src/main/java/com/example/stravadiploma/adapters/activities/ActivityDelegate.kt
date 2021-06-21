@@ -1,26 +1,32 @@
 package com.example.stravadiploma.adapters.activities
 
+import android.media.Image
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.stravadiploma.R
 import com.example.stravadiploma.data.ActivityData
 import com.example.stravadiploma.data.UserForActivity
 import com.example.stravadiploma.utils.inflate
+import com.example.stravadiploma.utils.logInfo
 import com.example.stravadiploma.utils.timeFormat
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import kotlinx.android.extensions.LayoutContainer
 import java.text.SimpleDateFormat
 
 class ActivityDelegate(
-    private val user: UserForActivity
+     private val user: UserForActivity
 ) :
     AbsListItemAdapterDelegate<ActivityData, ActivityData, ActivityDelegate.CommonHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup): CommonHolder {
         return CommonHolder(
-            parent.inflate(R.layout.item_activity),user)
+            parent.inflate(R.layout.item_activity),
+            user
+        )
     }
 
     override fun isForViewType(
@@ -52,22 +58,26 @@ class ActivityDelegate(
             val activityDistance = containerView.findViewById<TextView>(R.id.activityDistance)
             val activityElapsedTime = containerView.findViewById<TextView>(R.id.activityTime)
             val activityType = containerView.findViewById<TextView>(R.id.activityType)
-            val activityDescription = containerView.findViewById<TextView>(R.id.activityDescription)
-
+            val userAvatar = containerView.findViewById<ImageView>(R.id.userAvatar)
 
             val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
             val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm")
             val output: String = formatter.format(parser.parse("${activity.startDate}"))
-            userName.text = "${user.lastname} ${user.firstname}"
+              userName.text = "${user.lastName} ${user.firstName}"
             activityStartDate.text = output
             activityName.text = activity.name
-            " ${String.format("%.2f", activity.distance / 1000).toDouble()} km".also { activityDistance.text = it }
+            " ${String.format("%.2f", activity.distance / 1000).toDouble()} km".also {
+                activityDistance.text = it }
+
             activityElapsedTime.text = activity.elapsedTime.timeFormat()
             activityType.text = activity.type
-            activityDescription.text = activity.description
 
-
-
+            Glide.with(userAvatar)
+                .load(user.avatar)
+                .circleCrop()
+                .error(R.drawable.strava_avatar)
+                .placeholder(R.drawable.strava_avatar)
+                .into(userAvatar)
         }
     }
 }

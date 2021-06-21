@@ -13,10 +13,12 @@
         <action
 
             android:id="@+id/action_profileFragment_to_contactsFragment"
-            app:destination="@id/contactsFragment" />
+            app:destination="@id/contactsFragment"
+            app:popUpTo="@+id/profileFragment"/>
         <action
             android:id="@+id/action_profileFragment_to_userActivityFragment2"
-            app:destination="@id/userActivityFragment" />
+            app:destination="@id/userActivityFragment"
+            app:popUpToInclusive="false"/>
     </fragment>
 
     <fragment
@@ -36,15 +38,17 @@
         tools:layout="@layout/fragment_activities_list">
         <action
             android:id="@+id/action_userActivityFragment_to_newActivityFragment"
-            app:destination="@id/newActivityFragment" />
+            app:destination="@id/newActivityFragment"
+            app:popUpTo="@+id/userActivityFragment"/>
         <action
             android:id="@+id/action_userActivityFragment_to_profileFragment2"
-            app:destination="@id/profileFragment" />
+            app:destination="@id/profileFragment"
+            app:popUpToInclusive="false"/>
     </fragment>
 
     <fragment
         android:id="@+id/newActivityFragment"
-        android:name="com.example.stravadiploma.newactivity.NewActivityFragment"
+        android:name="com.example.stravadiploma.newActivity.NewActivityFragment"
         android:label="NewActivityFragment"
         tools:layout="@layout/fragment_new_activity"/>
 </navigation>

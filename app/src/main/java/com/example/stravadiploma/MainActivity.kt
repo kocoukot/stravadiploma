@@ -3,17 +3,14 @@ package com.example.stravadiploma
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.core.view.isVisible
+import android.view.animation.Animation
+import android.view.animation.AnimationSet
+import androidx.annotation.AnimRes
+import androidx.annotation.AnimatorRes
 import androidx.fragment.app.Fragment
-import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.stravadiploma.auth.AuthFragment
-import com.example.stravadiploma.databinding.ActivityMainBinding
-import com.example.stravadiploma.useractivitylist.UserActivityFragment
-import com.example.stravadiploma.ui.OnboardingFragment
-import com.example.stravadiploma.profile.ProfileFragment
+import com.example.stravadiploma.onBoarding.OnboardingFragment
 import com.example.stravadiploma.utils.Constants
-import com.google.android.material.bottomnavigation.BottomNavigationView
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,7 +26,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         if (savedInstanceState == null) {
             val fragment = getFirstFragment()
-            supportFragmentManager.beginTransaction().add(R.id.frame_for_Fragment, fragment)
+            val transaction = supportFragmentManager.beginTransaction().add(R.id.frame_for_Fragment, fragment)
+            transaction.setCustomAnimations(android.R.anim.fade_in,
+                android.R.anim.fade_out)
                 .commit()
         }
     }

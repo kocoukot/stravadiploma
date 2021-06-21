@@ -1,12 +1,10 @@
-package com.example.stravadiploma.ui
+package com.example.stravadiploma.onBoarding
 
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import by.kirich1409.viewbindingdelegate.viewBinding
-import com.example.stravadiploma.utils.DepthTransformation
 import com.example.stravadiploma.adapters.OnBoardingAdapter
 import com.example.stravadiploma.data.OnBoardingScreenData
 import com.example.stravadiploma.R

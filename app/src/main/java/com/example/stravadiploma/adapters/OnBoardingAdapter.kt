@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.example.stravadiploma.data.OnBoardingScreenData
-import com.example.stravadiploma.ui.OnBoardingFragmentItem
+import com.example.stravadiploma.onBoarding.OnBoardingFragmentItem
 
 class OnBoardingAdapter (
     private val screens: List<OnBoardingScreenData>,

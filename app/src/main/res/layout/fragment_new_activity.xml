@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -9,6 +10,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="@id/guideline7"
         app:layout_constraintStart_toStartOf="@id/guideline6"
         app:layout_constraintTop_toTopOf="parent">
@@ -17,6 +19,7 @@
             android:id="@+id/newActivityName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="tesss"
             android:hint="@string/name"
             app:layout_constraintEnd_toEndOf="@id/guideline7"
             app:layout_constraintStart_toStartOf="@id/guideline6"
@@ -29,12 +32,13 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="@id/guideline7"
         app:layout_constraintStart_toStartOf="@id/guideline6"
         app:layout_constraintTop_toBottomOf="@id/newActivityNameLayout">
 
         <AutoCompleteTextView
-            android:id="@+id/weightTextView"
+            android:id="@+id/newActivityTypeTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/type"
@@ -47,6 +51,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="@id/guideline7"
         app:layout_constraintStart_toStartOf="@id/guideline6"
         app:layout_constraintTop_toBottomOf="@id/newActivityTypeLayout">
@@ -55,10 +60,14 @@
             android:id="@+id/newActivityDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:editable="false"
+            android:focusable="false"
             android:hint="@string/date"
+            android:inputType="date"
             app:layout_constraintEnd_toEndOf="@id/guideline7"
             app:layout_constraintStart_toStartOf="@id/guideline6"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="Deprecated" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -67,6 +76,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="@id/guideline7"
         app:layout_constraintStart_toStartOf="@id/guideline6"
         app:layout_constraintTop_toBottomOf="@id/newActivityDateLayout">
@@ -75,10 +85,14 @@
             android:id="@+id/newActivityTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:editable="false"
+            android:focusable="false"
             android:hint="@string/time"
+            android:inputType="time"
             app:layout_constraintEnd_toEndOf="@id/guideline7"
             app:layout_constraintStart_toStartOf="@id/guideline6"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="Deprecated" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -86,6 +100,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="@id/guideline7"
         app:layout_constraintStart_toStartOf="@id/guideline6"
         app:layout_constraintTop_toBottomOf="@id/newActivityTimeLayout">
@@ -94,7 +109,9 @@
             android:id="@+id/newActivityDistance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/distance"
+            android:hint="@string/meters"
+            android:text="123"
+            android:inputType="number"
             app:layout_constraintEnd_toEndOf="@id/guideline7"
             app:layout_constraintStart_toStartOf="@id/guideline6"
             app:layout_constraintTop_toTopOf="parent" />

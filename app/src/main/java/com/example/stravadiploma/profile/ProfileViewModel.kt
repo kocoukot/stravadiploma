@@ -1,6 +1,5 @@
 package com.example.stravadiploma.profile
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -32,7 +31,6 @@ class ProfileViewModel : ViewModel() {
 
 
     fun getUserProfile() {
-        logInfo("making request")
         viewModelScope.launch {
             try {
                 _isLoading.postValue(true)
@@ -71,12 +69,12 @@ class ProfileViewModel : ViewModel() {
                 profileRepository.logoutProfile({
                     logInfo("Logged out")
                     isProfileLogoutLiveData.postValue(Unit)
-                },{
+                }, {
                     logInfo("Error logged out")
                 })
-
+                profileRepository.deleteInfo()
             } catch (t: Throwable) {
-             //   isErrorLiveData.postValue(true)
+                //   isErrorLiveData.postValue(true)
                 logInfo(t.localizedMessage!!)
             }
         }

@@ -26,13 +26,15 @@ data class UserProfile(
     val username: String,
 
     @ColumnInfo(name = UserContract.Columns.USER_LAST_NAME)
-    val lastname: String,
+    @Json(name="lastname")
+    val lastName: String,
 
     @ColumnInfo(name = UserContract.Columns.USER_FIRST_NAME)
-    val firstname: String,
+    @Json(name="firstname")
+    val firstName: String,
 
     @ColumnInfo(name = UserContract.Columns.USER_COUNTRY)
-    val country: String? = "-" ,
+    val country: String? = "-",
 
     @ColumnInfo(name = UserContract.Columns.USER_SEX)
     val sex: UserSex,

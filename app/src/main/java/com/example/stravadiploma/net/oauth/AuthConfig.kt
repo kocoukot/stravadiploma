@@ -5,7 +5,10 @@ import net.openid.appauth.ResponseTypeValues
 object AuthConfig {
 
     const val AUTH_URI = "https://www.strava.com/oauth/mobile/authorize"
+    const val DEAUTH_URI = "https://www.strava.com/oauth/deauthorize"
     const val TOKEN_URI = "https://www.strava.com/oauth/token"
+
+
     const val RESPONSE_TYPE = ResponseTypeValues.CODE
 
     const val SCOPE = "profile:read_all,profile:write,activity:read_all,activity:write"

@@ -27,20 +27,54 @@
     <string name="name">Name</string>
     <string name="description">Description</string>
     <string name="distance">Distance</string>
-    <string name="time">Time</string>
+    <string name="time">Duration</string>
     <string name="date">Date</string>
     <string name="type">Type</string>
     <string name="add">Add</string>
     <string name="logoutMessage">Вы уверены, что хотите выйти? Все данные будут удалены</string>
     <string name="decline">Decline</string>
     <string name="accept">Accept</string>
+    <string name="meters">Meters</string>
+    <string name="should_be_filled">Fill the field</string>
     <string name="shareString"> Hi! I\'m using Strava. https://www.strava.com/athletes/ </string>
 
-
-    <!--    AlpineSki, BackcountrySki, Canoeing, Crossfit, EBikeRide, Elliptical, Golf, Handcycle, Hike,-->
-<!--    IceSkate, InlineSkate, Kayaking, Kitesurf, NordicSki, Ride, RockClimbing, RollerSki, Rowing,-->
-<!--    Run, Sail, Skateboard, Snowboard, Snowshoe, Soccer, StairStepper, StandUpPaddling, Surfing,-->
-<!--    Swim, Velomobile, VirtualRide, VirtualRun, Walk, WeightTraining, Wheelchair, Windsurf, Workout,-->
-<!--    Yoga-->
+<string-array name="sport_types">
+    <item>AlpineSki</item>
+    <item>Canoeing</item>
+    <item>Crossfit</item>
+    <item>EBikeRide</item>
+    <item>Elliptical</item>
+    <item>Golf</item>
+    <item>Handcycle</item>
+    <item>Hike</item>
+    <item>IceSkate</item>
+    <item>InlineSkate</item>
+    <item>Kayaking</item>
+    <item>Kitesurf</item>
+    <item>NordicSki</item>
+    <item>Ride</item>
+    <item>RockClimbing</item>
+    <item>RollerSki</item>
+    <item>Rowing</item>
+    <item>Run</item>
+    <item>Windsurf</item>
+    <item>Workout</item>
+    <item>Yoga</item>
+    <item>Wheelchair</item>
+    <item>WeightTraining</item>
+    <item>Walk</item>
+    <item>VirtualRun</item>
+    <item>VirtualRide</item>
+    <item>Velomobile</item>
+    <item>Swim</item>
+    <item>Surfing</item>
+    <item>StandUpPaddling</item>
+    <item>StairStepper</item>
+    <item>Soccer</item>
+    <item>Snowshoe</item>
+    <item>Snowboard</item>
+    <item>Skateboard</item>
+    <item>Sail</item>
+</string-array>
 
 </resources>

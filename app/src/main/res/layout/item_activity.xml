@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="350dp">
+    android:layout_height="300dp">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/mainInfoCardView"
@@ -122,19 +122,6 @@
                 app:layout_constraintStart_toStartOf="@+id/guideline12"
                 app:layout_constraintTop_toBottomOf="@id/distanceLayout"
                 tools:text="Long distance running" />
-
-            <TextView
-                android:id="@+id/activityDescription"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:textColor="@color/purple_500"
-                style="@style/TextAppearance.AppCompat.Headline"
-                app:layout_constraintEnd_toEndOf="@id/guideline13"
-                app:layout_constraintStart_toStartOf="@+id/guideline12"
-                app:layout_constraintTop_toBottomOf="@id/activityType"
-                tools:text="The hardest running activity" />
-
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline12"

@@ -3,10 +3,12 @@ package com.example.stravadiploma.profile
 import com.example.stravadiploma.data.UserProfile
 import com.example.stravadiploma.database.Database
 import com.example.stravadiploma.net.Network
+import com.example.stravadiploma.net.SuccessAccessToken
 import com.example.stravadiploma.utils.logInfo
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
 
 class ProfileRepository {
 
@@ -15,6 +17,7 @@ class ProfileRepository {
     suspend fun getUserProfile(): UserProfile {
         val user = Network.userApi.searchUsers()
         userDao.addUser(user)
+
         return user
     }
 
@@ -45,9 +48,11 @@ class ProfileRepository {
         callback: (Boolean) -> Unit,
         errorCallBack: (e: Throwable) -> Unit
     ) {
+
         Network.userApi.logoutProfile().enqueue(object : Callback<Any> {
             override fun onResponse(call: Call<Any>, response: Response<Any>) {
                 if (response.isSuccessful) {
+                    SuccessAccessToken.token = ""
                     logInfo("Successfully uploaded")
                     callback(true)
                 } else {
@@ -60,5 +65,10 @@ class ProfileRepository {
                 errorCallBack(t)
             }
         })
+    }
+
+    suspend fun deleteInfo(){
+        userDao.deleteUser()
+        userDao.deleteActivity()
     }
 }

@@ -2,33 +2,27 @@ package com.example.stravadiploma.net
 
 import android.net.Uri
 import android.util.Log
+import androidx.browser.trusted.TokenStore
 import com.example.stravadiploma.net.oauth.AuthConfig
-import net.openid.appauth.AuthorizationRequest
-import net.openid.appauth.AuthorizationService
-import net.openid.appauth.AuthorizationServiceConfiguration
-import net.openid.appauth.ClientAuthentication
-import net.openid.appauth.ClientSecretPost
-import net.openid.appauth.TokenRequest
+import net.openid.appauth.*
 
 class AuthRepository {
 
-
     fun getAuthRequest(): AuthorizationRequest {
+
         val serviceConfiguration = AuthorizationServiceConfiguration(
             Uri.parse(AuthConfig.AUTH_URI),
             Uri.parse(AuthConfig.TOKEN_URI)
         )
 
-        val test = mapOf("approval_prompt" to "auto")
         val redirectUri = Uri.parse(AuthConfig.CALLBACK_URL)
         return AuthorizationRequest.Builder(
             serviceConfiguration,
-
             AuthConfig.CLIENT_ID,
             AuthConfig.RESPONSE_TYPE,
             redirectUri
         )
-            .setAdditionalParameters(test)
+            .setPrompt("force")
             .setScope(AuthConfig.SCOPE)
 
             .build()
@@ -54,11 +48,12 @@ class AuthRepository {
     }
 
     private fun getClientAuthentication(): ClientAuthentication {
+
         return ClientSecretPost(AuthConfig.CLIENT_SECRET)
     }
+
 }
 
 object SuccessAccessToken {
     var token = ""
-
 }

@@ -1,7 +1,5 @@
 package com.example.stravadiploma.utils
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -31,8 +29,8 @@ fun ViewGroup.inflate(@LayoutRes layoutRes: Int, attachToRoot: Boolean = false):
     return LayoutInflater.from(context).inflate(layoutRes, this, attachToRoot)
 }
 
-fun Long.timeFormat(): String {
-    val hour = if ((this / 3600) == 0.toLong()) "" else "${(this / 3600)} h "
+fun Int.timeFormat(): String {
+    val hour = if ((this / 3600) == 0) "" else "${(this / 3600)} h "
     return "$hour${(this % 3660 )/ 60} min"
 
 }

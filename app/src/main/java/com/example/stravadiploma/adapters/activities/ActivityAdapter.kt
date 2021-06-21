@@ -2,7 +2,6 @@ package com.example.stravadiploma.adapters.activities
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.stravadiploma.data.ActivityData
-import com.example.stravadiploma.data.Contact
 import com.example.stravadiploma.data.UserForActivity
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 
