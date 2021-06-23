@@ -23,7 +23,7 @@ data class UserProfile(
     val id: Long,
 
     @ColumnInfo(name = UserContract.Columns.USER_NICK_NAME)
-    val username: String,
+    val username: String?,
 
     @ColumnInfo(name = UserContract.Columns.USER_LAST_NAME)
     @Json(name="lastname")
@@ -37,7 +37,7 @@ data class UserProfile(
     val country: String? = "-",
 
     @ColumnInfo(name = UserContract.Columns.USER_SEX)
-    val sex: UserSex,
+    val sex: UserSex? = UserSex.Male,
 
     @ColumnInfo(name = UserContract.Columns.USER_FOLLOWERS_COUNT)
     @Json(name="follower_count")
@@ -48,7 +48,7 @@ data class UserProfile(
     val friendCount: Int? = 0,
 
     @ColumnInfo(name = UserContract.Columns.USER_WEIGHT)
-    var weight: Int,
+    var weight: Int?,
 
     @ColumnInfo(name = UserContract.Columns.USER_AVATAR)
     @Json(name="profile_medium")

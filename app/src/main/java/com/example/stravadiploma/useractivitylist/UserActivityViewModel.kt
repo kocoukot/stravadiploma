@@ -20,6 +20,7 @@ class UserActivityViewModel(application: Application) : AndroidViewModel(applica
     private val _isLoading = SingleLiveEvent<Boolean>()
     private val _isError = SingleLiveEvent<Boolean>()
     private val _updateList = MutableLiveData<Unit>()
+    private val _isListEmpty = SingleLiveEvent<Boolean>()
 
 
     val activityList: LiveData<List<ActivityData>>
@@ -34,6 +35,9 @@ class UserActivityViewModel(application: Application) : AndroidViewModel(applica
     val userName: LiveData<UserForActivity>
         get() = _userName
 
+    val isListEmpty: LiveData<Boolean>
+        get() = _isListEmpty
+
     fun getAllActivities(isInternet: Boolean) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -45,10 +49,12 @@ class UserActivityViewModel(application: Application) : AndroidViewModel(applica
                     } else {
                         activityRepository.getActivitiesFromRoom()
                     }
-                    val test = activityRepository.getUserName()
-                    _userName.postValue(test)
+
+                    val user = activityRepository.getUserName()
+                    _userName.postValue(user)
                     _activityList.postValue(list)
                     _updateList.postValue(Unit)
+                    _isListEmpty.postValue(list.isEmpty())
                 } catch (t: Throwable) {
                     _isError.postValue(true)
                     logInfo(t.localizedMessage)
@@ -65,6 +71,7 @@ class UserActivityViewModel(application: Application) : AndroidViewModel(applica
                 async {
                     val list = listOf(activity) + (_activityList.value ?: listOf())
                     activityRepository.startUploadToBD(activity)
+                    _isListEmpty.postValue(list.isEmpty())
                     _activityList.postValue(list)
                 }
                 async { activityRepository.startUpload(activity) }

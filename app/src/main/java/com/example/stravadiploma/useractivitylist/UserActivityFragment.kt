@@ -78,6 +78,8 @@ class UserActivityFragment : Fragment(R.layout.fragment_activities_list) {
         viewModel!!.activityList.observe(viewLifecycleOwner) { activityAdapter?.items = it }
         viewModel!!.isLoading.observe(viewLifecycleOwner, ::isLoading)
         viewModel!!.isError.observe(viewLifecycleOwner, ::isError)
+        viewModel!!.isListEmpty.observe(viewLifecycleOwner, ::isListEmpty)
+
 
         binding.addActivity.setOnClickListener {
             val transaction = parentFragmentManager.beginTransaction()
@@ -89,13 +91,13 @@ class UserActivityFragment : Fragment(R.layout.fragment_activities_list) {
     }
 
     private fun initList(user: UserForActivity) {
-        logInfo("init list")
         activityAdapter = ActivityAdapter(user)
         with(binding.activityListRecyclerView) {
             adapter = activityAdapter
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
         }
+
     }
 
     private fun isLoading(isLoading: Boolean) {
@@ -106,6 +108,10 @@ class UserActivityFragment : Fragment(R.layout.fragment_activities_list) {
         if (isError) {
             showSnack("Connection failed.")
         }
+    }
+
+    private fun isListEmpty(isEmpty: Boolean){
+        binding.emptyListTextView.isVisible = isEmpty
     }
 
     private fun showSnack(text: String) {

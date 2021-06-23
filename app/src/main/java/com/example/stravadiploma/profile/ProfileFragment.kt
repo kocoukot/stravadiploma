@@ -20,6 +20,7 @@ import com.example.stravadiploma.auth.AuthViewModel
 import com.example.stravadiploma.contacts.ContactsFragment
 import com.example.stravadiploma.data.UserProfile
 import com.example.stravadiploma.databinding.FragmentProfileBinding
+import com.example.stravadiploma.utils.logInfo
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import permissions.dispatcher.PermissionRequest
 import permissions.dispatcher.ktx.constructPermissionsRequest
@@ -30,7 +31,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private val binding get() = _binding!!
 
     private val viewModel: ProfileViewModel by viewModels()
-    private val viewModelT: AuthViewModel by viewModels()
 
     private var adapter: ArrayAdapter<String>? = null
     private var weightList = listOf<Int>()
@@ -48,7 +48,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         (requireActivity() as UserActivity).setTitle("Profile")
         bindViewModel()
         bindButtons()
-        setWeightList("")
+        setWeightList(0)
     }
 
     override fun onCreateView(
@@ -115,9 +115,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         "@${user.username}".also { binding.userNickname.text = it }
         binding.followersAmount.text = user.followerCount.toString()
         binding.followingAmount.text = user.friendCount.toString()
-        binding.genderTextView.text = user.sex.name
+        binding.genderTextView.text = user.sex?.name ?: "-"
         binding.countryTextView.text = user.country ?: "-"
-        setWeightList(user.weight.toString())
+        setWeightList(user.weight)
         loadAvatar(user.avatar)
     }
 
@@ -130,11 +130,13 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             .into(binding.userAvatar)
     }
 
-    private fun setWeightList(weightToSet: String) {
-        val weight = if (weightToSet.isEmpty()) "50" else weightToSet
+    private fun setWeightList(weightToSet: Int?) {
+
+        val weight = if (weightToSet == null) "-" else "$weightToSet kg"
         adapter =
             ArrayAdapter(requireContext(), R.layout.list_item, weightList.map { w -> "$w kg" })
-        binding.weightTextView.setText("$weight kg")
+
+        binding.weightTextView.setText("$weight")
         binding.weightTextView.setAdapter(adapter)
     }
 
