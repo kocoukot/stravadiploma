@@ -21,6 +21,7 @@ class UserActivityViewModel(application: Application) : AndroidViewModel(applica
     private val _isError = SingleLiveEvent<Boolean>()
     private val _updateList = MutableLiveData<Unit>()
     private val _isListEmpty = SingleLiveEvent<Boolean>()
+    private val _isFirstStart = MutableLiveData<Boolean>()
 
 
     val activityList: LiveData<List<ActivityData>>
@@ -38,7 +39,11 @@ class UserActivityViewModel(application: Application) : AndroidViewModel(applica
     val isListEmpty: LiveData<Boolean>
         get() = _isListEmpty
 
+    val isFirstStart: LiveData<Boolean>
+        get() = _isFirstStart
+
     fun getAllActivities(isInternet: Boolean) {
+        _isFirstStart.postValue(false)
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 try {
@@ -55,6 +60,7 @@ class UserActivityViewModel(application: Application) : AndroidViewModel(applica
                     _activityList.postValue(list)
                     _updateList.postValue(Unit)
                     _isListEmpty.postValue(list.isEmpty())
+
                 } catch (t: Throwable) {
                     _isError.postValue(true)
                     logInfo(t.localizedMessage)
@@ -68,13 +74,18 @@ class UserActivityViewModel(application: Application) : AndroidViewModel(applica
     fun addNewActivity(activity: ActivityData) {
         viewModelScope.launch {
             try {
+                val list = listOf(activity) + (_activityList.value ?: listOf())
+                logInfo(list.first())
+                activityRepository.startUploadToBD(activity)
+                _isListEmpty.postValue(list.isEmpty())
+                _activityList.postValue(list)
+                _updateList.postValue(Unit)
+
                 async {
-                    val list = listOf(activity) + (_activityList.value ?: listOf())
-                    activityRepository.startUploadToBD(activity)
-                    _isListEmpty.postValue(list.isEmpty())
-                    _activityList.postValue(list)
+                    _isFirstStart.postValue(true)
+                    activityRepository.startUpload(activity)
+                    _isFirstStart.postValue(false)
                 }
-                async { activityRepository.startUpload(activity) }
             } catch (t: Throwable) {
                 _isError.postValue(true)
                 logInfo(t.localizedMessage)

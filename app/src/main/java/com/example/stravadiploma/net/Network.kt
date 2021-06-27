@@ -12,7 +12,7 @@ import retrofit2.create
 
 object Network {
     private val okhttpClient = OkHttpClient.Builder()
-        .addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
+      //  .addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
         .addInterceptor { chain ->
             val original = chain.request()
 

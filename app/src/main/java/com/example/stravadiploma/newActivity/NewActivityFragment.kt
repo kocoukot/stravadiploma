@@ -3,10 +3,12 @@ package com.example.stravadiploma.newActivity
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProviders
@@ -15,6 +17,7 @@ import com.example.stravadiploma.UserActivity
 import com.example.stravadiploma.data.ActivityData
 import com.example.stravadiploma.databinding.FragmentNewActivityBinding
 import com.example.stravadiploma.useractivitylist.UserActivityViewModel
+import com.example.stravadiploma.utils.logInfo
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZoneOffset
@@ -55,12 +58,18 @@ class NewActivityFragment : Fragment(R.layout.fragment_new_activity) {
 
     private fun bindButton() {
         binding.newActivityAddButton.setOnClickListener {
-            viewModel.saveNewActivity(
-                binding.newActivityName.text.toString(),
-                binding.newActivityTypeTextView.text.toString(),
-                binding.newActivityDistance.text.toString().toFloat(),
-                binding.newActivityDescription.text.toString()
-            )
+
+            if (binding.newActivityDistance.text.toString().toFloatOrNull() != null) {
+                viewModel.saveNewActivity(
+                    binding.newActivityName.text.toString(),
+                    binding.newActivityTypeTextView.text.toString(),
+                    binding.newActivityDistance.text.toString().toFloat(),
+                    binding.newActivityDescription.text.toString()
+                )
+            } else {
+                binding.newActivityDistance.error = getString(R.string.incorrect_format)
+            }
+
         }
 
         binding.newActivityTime.setOnClickListener {
@@ -116,6 +125,7 @@ class NewActivityFragment : Fragment(R.layout.fragment_new_activity) {
             binding.newActivityDistance,
             binding.newActivityTime
         )
+
         fields.forEach {
             if (it.text.isNullOrEmpty()) {
                 it.error = getString(R.string.should_be_filled)
@@ -123,6 +133,10 @@ class NewActivityFragment : Fragment(R.layout.fragment_new_activity) {
                 it.error = null
             }
         }
+        if (isError){
+            Toast.makeText(requireContext(), "Error. Incorrect information.", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     override fun onDestroy() {

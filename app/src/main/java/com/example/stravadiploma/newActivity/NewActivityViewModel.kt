@@ -21,11 +21,6 @@ class NewActivityViewModel() : ViewModel() {
     private val _isSuccess = SingleLiveEvent<ActivityData>()
     private val _isErrorSaving = SingleLiveEvent<Boolean>()
 
-    val activityDuration: LiveData<Int>
-        get() = _activityDuration
-
-    val activityDate: LiveData<ZonedDateTime>
-        get() = _activityDate
 
     val isErrorAdding: LiveData<Boolean>
         get() = _isErrorAdding
@@ -83,7 +78,6 @@ class NewActivityViewModel() : ViewModel() {
             LocalDateTime.now().second
         )
             .atZone(ZoneOffset.UTC)
-        logInfo(date)
         _activityDate.postValue(date)
     }
 

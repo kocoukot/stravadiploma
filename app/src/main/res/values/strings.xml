@@ -36,6 +36,7 @@
     <string name="accept">Accept</string>
     <string name="meters">Meters</string>
     <string name="should_be_filled">Fill the field</string>
+    <string name="incorrect_format">Incorrect format</string>
     <string name="shareString"> Hi! I\'m using Strava. https://www.strava.com/athletes/ </string>
     <string name="list_is_empty_add_your_first_activity">List is empty! Add your first activity</string>
 

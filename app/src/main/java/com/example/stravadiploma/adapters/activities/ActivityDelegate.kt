@@ -66,7 +66,7 @@ class ActivityDelegate(
               userName.text = "${user.lastName} ${user.firstName}"
             activityStartDate.text = output
             activityName.text = activity.name
-            " ${String.format("%.2f", activity.distance / 1000).toDouble()} km".also {
+            " ${String.format("%.2f", activity.distance / 1000).toFloat()} km".also {
                 activityDistance.text = it }
 
             activityElapsedTime.text = activity.elapsedTime.timeFormat()

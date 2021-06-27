@@ -1,12 +1,11 @@
 package com.example.stravadiploma.useractivitylist
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
@@ -20,8 +19,12 @@ import com.example.stravadiploma.net.Network
 import com.example.stravadiploma.newActivity.NewActivityFragment
 import com.example.stravadiploma.utils.logInfo
 import com.google.android.material.snackbar.Snackbar
-import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegate
-import kotlin.math.log
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.internal.threadName
+import kotlin.concurrent.thread
+
 
 class UserActivityFragment : Fragment(R.layout.fragment_activities_list) {
 
@@ -47,7 +50,7 @@ class UserActivityFragment : Fragment(R.layout.fragment_activities_list) {
         WorkManager.getInstance(requireContext())
             .getWorkInfosForUniqueWorkLiveData(UserActivityRepository.UPLOAD_KEY)
             .observe(viewLifecycleOwner, { work ->
-                if (!work.isNullOrEmpty()){
+                if (!work.isNullOrEmpty()) {
                     handleWorkInfo(work.first())
                 }
             })
@@ -74,11 +77,21 @@ class UserActivityFragment : Fragment(R.layout.fragment_activities_list) {
 
 
     private fun bindViews() {
-        viewModel!!.userName.observe(viewLifecycleOwner, ::initList)
-        viewModel!!.activityList.observe(viewLifecycleOwner) { activityAdapter?.items = it }
+        viewModel!!.userName.observe(viewLifecycleOwner) { user ->
+            initList(user)
+        }
+
+
+        viewModel!!.activityList.observe(viewLifecycleOwner) {
+            activityAdapter?.items = it
+        }
         viewModel!!.isLoading.observe(viewLifecycleOwner, ::isLoading)
         viewModel!!.isError.observe(viewLifecycleOwner, ::isError)
         viewModel!!.isListEmpty.observe(viewLifecycleOwner, ::isListEmpty)
+        viewModel!!.isFirstStart.observe(viewLifecycleOwner){
+            firstStart = it
+        }
+
 
 
         binding.addActivity.setOnClickListener {
@@ -110,7 +123,7 @@ class UserActivityFragment : Fragment(R.layout.fragment_activities_list) {
         }
     }
 
-    private fun isListEmpty(isEmpty: Boolean){
+    private fun isListEmpty(isEmpty: Boolean) {
         binding.emptyListTextView.isVisible = isEmpty
     }
 
@@ -126,14 +139,12 @@ class UserActivityFragment : Fragment(R.layout.fragment_activities_list) {
         if (workInfo.state == WorkInfo.State.SUCCEEDED && firstStart) {
             viewModel!!.isUploaded()
             showSnack("Uploaded")
-        } else {
-            firstStart = true
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        activityAdapter = null
+         activityAdapter = null
     }
 
 
