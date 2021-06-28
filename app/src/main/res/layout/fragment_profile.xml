@@ -21,8 +21,7 @@
             android:id="@+id/mainInfoCardView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:outlineAmbientShadowColor="#000000"
-
+            android:outlineAmbientShadowColor="@color/black"
             app:cardElevation="24dp"
             app:cardMaxElevation="36dp"
             app:contentPadding="16dp"
@@ -59,7 +58,7 @@
 
                     <TextView
                         android:id="@+id/userName"
-                        style="@style/InfoStyle"
+                        style="@style/TextAppearance.MaterialComponents.Headline6"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -82,8 +81,6 @@
                         app:layout_constraintStart_toEndOf="@id/userAvatar"
                         app:layout_constraintTop_toBottomOf="@id/userName"
                         tools:text="userNickName" />
-
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -145,7 +142,6 @@
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </com.google.android.material.card.MaterialCardView>
 
 
@@ -188,7 +184,6 @@
                     app:layout_constraintStart_toStartOf="@id/guideline10"
                     app:layout_constraintTop_toTopOf="parent">
 
-
                     <com.google.android.material.textview.MaterialTextView
                         style="@style/HeaderStyle"
                         android:layout_width="match_parent"
@@ -197,7 +192,7 @@
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/genderTextView"
-                        style="@style/InfoStyle"
+                        style="@style/TextAppearance.MaterialComponents.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="4dp"
@@ -208,18 +203,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-
                         android:text="@string/country" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/countryTextView"
-                        style="@style/InfoStyle"
+                        style="@style/TextAppearance.MaterialComponents.Body2"
                         android:layout_width="match_parent"
-
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="4dp"
                         tools:text="Russia" />
-
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textField"
@@ -227,7 +219,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/weight_edit">
-
 
                         <AutoCompleteTextView
                             android:id="@+id/weightTextView"
@@ -291,7 +282,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_end="80dp" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

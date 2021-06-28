@@ -4,8 +4,8 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import com.example.stravadiploma.net.oauth.SuccessAccessToken
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
@@ -15,7 +15,6 @@ object Network {
       //  .addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
         .addInterceptor { chain ->
             val original = chain.request()
-
             val requestBuilder = original.newBuilder()
                 .header("Authorization", "Bearer ${SuccessAccessToken.token}")
             val request = requestBuilder.build()

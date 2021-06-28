@@ -1,17 +1,15 @@
 package com.example.stravadiploma.profile
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import android.app.Application
+import androidx.lifecycle.*
 import com.example.stravadiploma.data.UserProfile
 import com.example.stravadiploma.utils.logInfo
 import com.example.stravadiploma.utils.SingleLiveEvent
 import kotlinx.coroutines.launch
 
-class ProfileViewModel : ViewModel() {
+class ProfileViewModel (application: Application) : AndroidViewModel(application){
 
-    private val profileRepository = ProfileRepository()
+    private val profileRepository = ProfileRepository(application)
 
     private val _userProfile = MutableLiveData<UserProfile>()
 

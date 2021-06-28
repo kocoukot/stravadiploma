@@ -1,17 +1,25 @@
 package com.example.stravadiploma.profile
 
+import android.content.Context
 import com.example.stravadiploma.data.UserProfile
 import com.example.stravadiploma.database.Database
 import com.example.stravadiploma.net.Network
-import com.example.stravadiploma.net.SuccessAccessToken
+import com.example.stravadiploma.net.oauth.SuccessAccessToken
+import com.example.stravadiploma.utils.Constants
 import com.example.stravadiploma.utils.logInfo
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 
-class ProfileRepository {
+class ProfileRepository(context: Context) {
 
+    private val sharedPref by lazy {
+        context.getSharedPreferences(
+            Constants.SHARED_PREF,
+            Context.MODE_PRIVATE
+        )
+    }
     private val userDao = Database.instance.userDao()
 
     suspend fun getUserProfile(): UserProfile {
@@ -52,6 +60,10 @@ class ProfileRepository {
         Network.userApi.logoutProfile().enqueue(object : Callback<Any> {
             override fun onResponse(call: Call<Any>, response: Response<Any>) {
                 if (response.isSuccessful) {
+                    sharedPref.edit()
+                        .remove(Constants.ACCESS_TOKEN)
+                        .remove(Constants.ACCESS_TOKEN_EXPIRATION)
+                        .apply()
                     SuccessAccessToken.token = ""
                     logInfo("Successfully uploaded")
                     callback(true)

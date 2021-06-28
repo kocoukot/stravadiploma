@@ -58,18 +58,12 @@ class NewActivityFragment : Fragment(R.layout.fragment_new_activity) {
 
     private fun bindButton() {
         binding.newActivityAddButton.setOnClickListener {
-
-            if (binding.newActivityDistance.text.toString().toFloatOrNull() != null) {
                 viewModel.saveNewActivity(
                     binding.newActivityName.text.toString(),
                     binding.newActivityTypeTextView.text.toString(),
-                    binding.newActivityDistance.text.toString().toFloat(),
+                    binding.newActivityDistance.text.toString().replace(',', '.').toFloat(),
                     binding.newActivityDescription.text.toString()
                 )
-            } else {
-                binding.newActivityDistance.error = getString(R.string.incorrect_format)
-            }
-
         }
 
         binding.newActivityTime.setOnClickListener {

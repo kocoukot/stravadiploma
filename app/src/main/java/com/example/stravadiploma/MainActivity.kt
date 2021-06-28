@@ -27,8 +27,7 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             val fragment = getFirstFragment()
             val transaction = supportFragmentManager.beginTransaction().add(R.id.frame_for_Fragment, fragment)
-            transaction.setCustomAnimations(android.R.anim.fade_in,
-                android.R.anim.fade_out)
+            transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
                 .commit()
         }
     }

@@ -6,7 +6,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.stravadiploma.net.AuthRepository
+import com.example.stravadiploma.net.oauth.AuthRepository
 import com.example.stravadiploma.R
 import com.example.stravadiploma.utils.SingleLiveEvent
 import net.openid.appauth.AuthorizationException
@@ -15,7 +15,7 @@ import net.openid.appauth.TokenRequest
 
 class AuthViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val authRepository = AuthRepository()
+    private val authRepository = AuthRepository(application)
     private val authService: AuthorizationService = AuthorizationService(getApplication())
     private val openAuthPageLiveEvent = SingleLiveEvent<Intent>()
     private val toastLiveEvent = SingleLiveEvent<Int>()
@@ -57,6 +57,7 @@ class AuthViewModel(application: Application) : AndroidViewModel(application) {
     fun openLoginPage() {
         val customTabsIntent = CustomTabsIntent.Builder()
             .build()
+
 
         val openAuthPageIntent = authService.getAuthorizationRequestIntent(
             authRepository.getAuthRequest(),

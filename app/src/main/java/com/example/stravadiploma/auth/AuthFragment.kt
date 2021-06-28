@@ -1,6 +1,7 @@
 package com.example.stravadiploma.auth
 
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -12,11 +13,21 @@ import com.example.stravadiploma.MainActivity
 import com.example.stravadiploma.R
 import com.example.stravadiploma.UserActivity
 import com.example.stravadiploma.databinding.FragmentAuthBinding
+import com.example.stravadiploma.net.oauth.SuccessAccessToken
+import com.example.stravadiploma.utils.Constants
+import com.example.stravadiploma.utils.logInfo
 import com.example.stravadiploma.utils.toast
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationResponse
 
 class AuthFragment : Fragment(R.layout.fragment_auth) {
+
+    private val sharedPref by lazy {
+        requireContext().getSharedPreferences(
+            Constants.SHARED_PREF,
+            Context.MODE_PRIVATE
+        )
+    }
 
     private val viewModel: AuthViewModel by viewModels()
     private val binding by viewBinding(FragmentAuthBinding::bind)
@@ -47,11 +58,15 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
         viewModel.openAuthPageLiveData.observe(viewLifecycleOwner, ::openAuthPage)
         viewModel.toastLiveData.observe(viewLifecycleOwner, ::toast)
         viewModel.authSuccessLiveData.observe(viewLifecycleOwner) {
-            val activityClass = UserActivity::class.java
-            val intent = Intent(requireContext(), activityClass)
-            startActivity(intent)
-            (requireContext() as MainActivity).finish()
+            openProfile()
         }
+    }
+
+    private fun openProfile() {
+        val activityClass = UserActivity::class.java
+        val intent = Intent(requireContext(), activityClass)
+        startActivity(intent)
+        (requireContext() as MainActivity).finish()
     }
 
     private fun updateIsLoading(isLoading: Boolean) {
@@ -61,7 +76,14 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
     }
 
     private fun openAuthPage(intent: Intent) {
-        startActivityForResult(intent, AUTH_REQUEST_CODE)
+        val currentTime = System.currentTimeMillis()
+        val expTime = sharedPref.getLong(Constants.ACCESS_TOKEN_EXPIRATION, 0)
+        if ((expTime - currentTime) < 0) {
+            startActivityForResult(intent, AUTH_REQUEST_CODE)
+        } else {
+            SuccessAccessToken.token = sharedPref.getString(Constants.ACCESS_TOKEN, "") ?: ""
+            openProfile()
+        }
     }
 
     companion object {

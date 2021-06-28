@@ -23,7 +23,7 @@ data class UserProfile(
     val id: Long,
 
     @ColumnInfo(name = UserContract.Columns.USER_NICK_NAME)
-    val username: String?,
+    val username: String? = "",
 
     @ColumnInfo(name = UserContract.Columns.USER_LAST_NAME)
     @Json(name="lastname")

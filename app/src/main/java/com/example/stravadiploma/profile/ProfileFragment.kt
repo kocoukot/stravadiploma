@@ -112,7 +112,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private fun setUserInfo(user: UserProfile) {
         "${user.lastName} ${user.firstName}".also { binding.userName.text = it }
-        "@${user.username}".also { binding.userNickname.text = it }
+        if (user.username != null){
+            "@${user.username}".also { binding.userNickname.text = it }
+        }
+
         binding.followersAmount.text = user.followerCount.toString()
         binding.followingAmount.text = user.friendCount.toString()
         binding.genderTextView.text = user.sex?.name ?: "-"

@@ -1,12 +1,19 @@
-package com.example.stravadiploma.net
+package com.example.stravadiploma.net.oauth
 
+import android.content.Context
 import android.net.Uri
-import android.util.Log
-import androidx.browser.trusted.TokenStore
-import com.example.stravadiploma.net.oauth.AuthConfig
+import com.example.stravadiploma.utils.Constants
+import com.example.stravadiploma.utils.logInfo
 import net.openid.appauth.*
 
-class AuthRepository {
+class AuthRepository(context: Context) {
+
+    private val sharedPref by lazy {
+        context.getSharedPreferences(
+            Constants.SHARED_PREF,
+            Context.MODE_PRIVATE
+        )
+    }
 
     fun getAuthRequest(): AuthorizationRequest {
 
@@ -39,7 +46,14 @@ class AuthRepository {
                 response != null -> {
                     val accessToken = response.accessToken.orEmpty()
                     SuccessAccessToken.token = accessToken
-                    Log.d("DiplomaProject", accessToken)
+                    logInfo(accessToken)
+                    sharedPref.edit()
+                        .putString(Constants.ACCESS_TOKEN, accessToken)
+                        .putLong(
+                            Constants.ACCESS_TOKEN_EXPIRATION,
+                            response.accessTokenExpirationTime ?: 0
+                        )
+                        .apply()
                     onComplete()
                 }
                 else -> onError()
