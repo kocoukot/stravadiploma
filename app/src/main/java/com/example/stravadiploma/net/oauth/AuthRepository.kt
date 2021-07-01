@@ -70,4 +70,5 @@ class AuthRepository(context: Context) {
 
 object SuccessAccessToken {
     var token = ""
+    var expTime: Long = 0
 }

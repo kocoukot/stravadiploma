@@ -16,6 +16,7 @@ import com.example.stravadiploma.adapters.activities.ActivityAdapter
 import com.example.stravadiploma.data.UserForActivity
 import com.example.stravadiploma.databinding.FragmentActivitiesListBinding
 import com.example.stravadiploma.net.Network
+import com.example.stravadiploma.net.oauth.SuccessAccessToken
 import com.example.stravadiploma.newActivity.NewActivityFragment
 import com.example.stravadiploma.utils.logInfo
 import com.google.android.material.snackbar.Snackbar
@@ -88,7 +89,7 @@ class UserActivityFragment : Fragment(R.layout.fragment_activities_list) {
         viewModel!!.isLoading.observe(viewLifecycleOwner, ::isLoading)
         viewModel!!.isError.observe(viewLifecycleOwner, ::isError)
         viewModel!!.isListEmpty.observe(viewLifecycleOwner, ::isListEmpty)
-        viewModel!!.isFirstStart.observe(viewLifecycleOwner){
+        viewModel!!.isFirstStart.observe(viewLifecycleOwner) {
             firstStart = it
         }
 
@@ -144,7 +145,7 @@ class UserActivityFragment : Fragment(R.layout.fragment_activities_list) {
 
     override fun onDestroy() {
         super.onDestroy()
-         activityAdapter = null
+        activityAdapter = null
     }
 
 

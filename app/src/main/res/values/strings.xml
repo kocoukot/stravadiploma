@@ -39,6 +39,7 @@
     <string name="incorrect_format">Incorrect format</string>
     <string name="shareString"> Hi! I\'m using Strava. https://www.strava.com/athletes/ </string>
     <string name="list_is_empty_add_your_first_activity">List is empty! Add your first activity</string>
+    <string name="need_to_login">Please login again. Your session is expired</string>
 
     <string-array name="sport_types">
     <item>AlpineSki</item>

@@ -16,11 +16,9 @@ import com.bumptech.glide.Glide
 import com.example.stravadiploma.MainActivity
 import com.example.stravadiploma.R
 import com.example.stravadiploma.UserActivity
-import com.example.stravadiploma.auth.AuthViewModel
 import com.example.stravadiploma.contacts.ContactsFragment
 import com.example.stravadiploma.data.UserProfile
 import com.example.stravadiploma.databinding.FragmentProfileBinding
-import com.example.stravadiploma.utils.logInfo
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import permissions.dispatcher.PermissionRequest
 import permissions.dispatcher.ktx.constructPermissionsRequest
@@ -139,7 +137,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         adapter =
             ArrayAdapter(requireContext(), R.layout.list_item, weightList.map { w -> "$w kg" })
 
-        binding.weightTextView.setText("$weight")
+        binding.weightTextView.setText(weight)
         binding.weightTextView.setAdapter(adapter)
     }
 

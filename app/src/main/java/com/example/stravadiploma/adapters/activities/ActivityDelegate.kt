@@ -18,7 +18,7 @@ import kotlinx.android.extensions.LayoutContainer
 import java.text.SimpleDateFormat
 
 class ActivityDelegate(
-     private val user: UserForActivity
+    private val user: UserForActivity
 ) :
     AbsListItemAdapterDelegate<ActivityData, ActivityData, ActivityDelegate.CommonHolder>() {
 
@@ -63,11 +63,16 @@ class ActivityDelegate(
             val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
             val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm")
             val output: String = formatter.format(parser.parse("${activity.startDate}"))
-              userName.text = "${user.lastName} ${user.firstName}"
+            val distanceInKM = (activity.distance / 1000)
+            
+            userName.text = "${user.lastName} ${user.firstName}"
             activityStartDate.text = output
             activityName.text = activity.name
-            " ${String.format("%.2f", activity.distance / 1000).toFloat()} km".also {
-                activityDistance.text = it }
+            " ${
+                String.format("%.2f", distanceInKM).replace(',', '.').toFloat()
+            } km".also {
+                activityDistance.text = it
+            }
 
             activityElapsedTime.text = activity.elapsedTime.timeFormat()
             activityType.text = activity.type

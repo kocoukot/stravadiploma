@@ -4,15 +4,29 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import com.example.stravadiploma.data.GlobalListener
 import com.example.stravadiploma.net.oauth.SuccessAccessToken
+import com.example.stravadiploma.utils.logInfo
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 
 object Network {
+
     private val okhttpClient = OkHttpClient.Builder()
-      //  .addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.HEADERS))
+        .addNetworkInterceptor { chain ->
+            val request = chain.request()
+            val response = chain.proceed(request)
+            when (response.code) {
+                401 ->
+                    if ((SuccessAccessToken.expTime - System.currentTimeMillis()) < 0){
+                        GlobalListener.logout()
+                    }
+            }
+                response
+
+        }
         .addInterceptor { chain ->
             val original = chain.request()
             val requestBuilder = original.newBuilder()

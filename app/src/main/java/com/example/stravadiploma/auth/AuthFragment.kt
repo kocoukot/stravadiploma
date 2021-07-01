@@ -35,6 +35,7 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bindViewModel()
+        loginIfHasToken()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -75,15 +76,18 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
         binding.headerLogging.isVisible = !isLoading
     }
 
-    private fun openAuthPage(intent: Intent) {
+    private fun loginIfHasToken() {
         val currentTime = System.currentTimeMillis()
         val expTime = sharedPref.getLong(Constants.ACCESS_TOKEN_EXPIRATION, 0)
-        if ((expTime - currentTime) < 0) {
-            startActivityForResult(intent, AUTH_REQUEST_CODE)
-        } else {
+        if ((expTime - currentTime) >= 0) {
             SuccessAccessToken.token = sharedPref.getString(Constants.ACCESS_TOKEN, "") ?: ""
+            SuccessAccessToken.expTime = sharedPref.getLong(Constants.ACCESS_TOKEN_EXPIRATION, 0.toLong())
             openProfile()
         }
+    }
+
+    private fun openAuthPage(intent: Intent) {
+        startActivityForResult(intent, AUTH_REQUEST_CODE)
     }
 
     companion object {

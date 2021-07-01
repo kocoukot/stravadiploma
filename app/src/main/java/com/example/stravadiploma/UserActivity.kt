@@ -1,16 +1,21 @@
 package com.example.stravadiploma
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.example.stravadiploma.data.GlobalListener
 import com.example.stravadiploma.databinding.ActivityUserBinding
 import com.example.stravadiploma.profile.ProfileFragment
 import com.example.stravadiploma.useractivitylist.UserActivityFragment
+import com.example.stravadiploma.utils.GlobalNavigationHandler
 
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class UserActivity : AppCompatActivity() {
+class UserActivity : AppCompatActivity(), GlobalNavigationHandler {
+
 
     private val fragmentProfile = ProfileFragment()
     private val fragmentActivity = UserActivityFragment()
@@ -53,6 +58,11 @@ class UserActivity : AppCompatActivity() {
         bindingViews()
     }
 
+    override fun onStart() {
+        super.onStart()
+        GlobalListener.registerHandler(this)
+    }
+
     private fun bindingViews() {
         binding.bottomNavigation.setOnNavigationItemSelectedListener(
             mOnNavigationItemSelectedListener
@@ -65,7 +75,20 @@ class UserActivity : AppCompatActivity() {
 
     fun setBottomBarVisibility(isVisible: Boolean) {
         binding.bottomNavigation.isVisible = isVisible
-
     }
+
+    override fun onStop() {
+        super.onStop()
+        GlobalListener.unregisterHandler()
+    }
+
+    override fun logout() {
+        Toast.makeText(this, getString(R.string.need_to_login), Toast.LENGTH_SHORT).show()
+        val activityClass = MainActivity::class.java
+        val intent = Intent(this, activityClass)
+        this.startActivity(intent)
+        this.finish()
+    }
+
 
 }
