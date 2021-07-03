@@ -40,7 +40,7 @@ class ContactsViewModel(application: Application) : AndroidViewModel(application
         intent.putExtra(
 
             Intent.EXTRA_TEXT, "Hi! I am using Strava. " +
-                    "https://www.strava.com/athletes/ $userId"
+                    "https://www.strava.com/athletes/$userId"
         )
         _shareIntent.postValue(intent)
     }
